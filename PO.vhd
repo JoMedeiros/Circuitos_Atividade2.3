@@ -29,14 +29,17 @@ ARCHITECTURE arch OF PO IS
 	
 	SIGNAL contador_subtracoes : STD_LOGIC_VECTOR(15 DOWNTO 0);
 	SIGNAL nova_subtracao : STD_LOGIC_VECTOR(15 DOWNTO 0) := "0000000000000000";
-	
-BEGIN
+	-- Sinal para armazenar os resultados das subtração
+	SIGNAL temp : STD_LOGIC_VECTOR(15 DOWNTO 0);
 
+BEGIN
+	
 	j0 : Registrador PORT MAP( Numero, clk, load_A, A );
 	j1 : Registrador PORT MAP( Numero, clk, load_B, B );
+	-- Temp removido do processo para um registrador
+	j2 : Registrador PORT MAP( A, clk, operar, Temp );
 	
 	PROCESS( clk, Numero, load_A, load_B, clear, operar , A, B , contador_subtracoes )
-	VARIABLE temp: STD_LOGIC_VECTOR(15 DOWNTO 0) := A;
 	BEGIN
 		IF ( operar = '1' ) THEN
 			temp := temp - B;
